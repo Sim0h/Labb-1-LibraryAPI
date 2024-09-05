@@ -27,7 +27,7 @@ namespace MVC_LibraryAPI.Services
             return await this.SendAsync<T>(new Models.ApiRequest
             {
                 apiType = StaticDetails.ApiType.DELETE,
-                Url = StaticDetails.LibraryApiBase + "/api/deletebook" + id,
+                Url = StaticDetails.LibraryApiBase + "/api/deletebook/" + id,
                 AccessToken = ""
             });
         }
