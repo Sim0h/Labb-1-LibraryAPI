@@ -27,16 +27,7 @@ namespace LibraryAPI.Repository
         {
             return await _db.Libraries.FirstOrDefaultAsync(l => l.Id == id);
         }
-
-        public async Task<Library> GetAsyncAuthor(string author)
-        {
-            return await _db.Libraries.FirstOrDefaultAsync(l => l.Author == author.ToLower());
-        }
-
-        public async Task<Library> GetAsyncTitle(string Title)
-        {
-            return await _db.Libraries.FirstOrDefaultAsync(l => l.Title == Title.ToLower());
-        }
+      
 
         public async Task RemoveAsync(Library library)
         {

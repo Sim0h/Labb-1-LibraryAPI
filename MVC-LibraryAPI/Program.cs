@@ -1,3 +1,5 @@
+using MVC_LibraryAPI.Services;
+
 namespace MVC_LibraryAPI
 {
     public class Program
@@ -8,6 +10,10 @@ namespace MVC_LibraryAPI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ILibraryService, LibraryService>();
+            builder.Services.AddHttpClient();
+
+            StaticDetails.LibraryApiBase = builder.Configuration["ServiceUrls:LibraryAPI"];
 
             var app = builder.Build();
 

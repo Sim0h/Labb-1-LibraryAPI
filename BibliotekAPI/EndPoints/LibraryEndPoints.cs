@@ -11,8 +11,6 @@ namespace LibraryAPI.EndPoints
         public static void ConfigurationLibraryEndPoints(this WebApplication app)
         {
             app.MapGet("/api/books", GetAllBooks).WithName("GetAllBooks").Produces<APIResponse>();
-            app.MapGet("/api/title/", GetTitle).WithName("Title").Produces<APIResponse>();
-            app.MapGet("/api/author/", GetAuthor).WithName("Author").Produces<APIResponse>();
             app.MapGet("/api/book/{id:int}", GetBookId).WithName("BookByID").Produces<APIResponse>();
             app.MapPost("/api/createbook", CreateBook).WithName("CreateBook").Accepts<LibraryCreateDTO>("application/json").Produces(201).Produces(400);
             app.MapPut("/api/updatebook", UpdateBook).WithName("UpdateBook").Accepts<LibraryUpdateDTO>("application/json").Produces<LibraryUpdateDTO>(200).Produces(400);
@@ -30,14 +28,7 @@ namespace LibraryAPI.EndPoints
             return Results.Ok(response);
         }
 
-        private async static Task<IResult> GetTitle(ILibraryRepo _libraryRepo, string title)
-        {
-            APIResponse response = new APIResponse();
-            response.Result = await _libraryRepo.GetAsyncTitle(title);
-            response.IsSuccess = true;
-            response.StatusCode= System.Net.HttpStatusCode.OK;
-            return Results.Ok(response);
-        }
+     
         private async static Task<IResult> GetBookId(ILibraryRepo _libraryRepo, int id)
         {
             APIResponse response = new APIResponse();
@@ -46,21 +37,13 @@ namespace LibraryAPI.EndPoints
             response.StatusCode= System.Net.HttpStatusCode.OK;
             return Results.Ok(response);
         }
-        private async static Task<IResult> GetAuthor(ILibraryRepo _libraryRepo, string author)
-        {
-            APIResponse response = new APIResponse();
-            response.Result = await _libraryRepo.GetAsyncAuthor(author);
-            response.IsSuccess = true;
-            response.StatusCode = System.Net.HttpStatusCode.OK;
-            return Results.Ok(response);
-
-        }
+     
 
         private async static Task<IResult> CreateBook(ILibraryRepo _libraryRepo, IMapper _mapper, LibraryCreateDTO library_c_DTO)
         {
             APIResponse response = new() { IsSuccess = true , StatusCode = System.Net.HttpStatusCode.BadRequest};
 
-            if(_libraryRepo.GetAsyncTitle(library_c_DTO.Title).GetAwaiter().GetResult() != null)
+            if(_libraryRepo.GetAsync(library_c_DTO.Id).GetAwaiter().GetResult() != null)
             {
                 response.ErrorMessages.Add("Title Already Exists.");
                 return Results.BadRequest(response);

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<LibraryDTO>
+
+<h1>All Books</h1>
+
+<p>
+    <a asp-action="CreateBook" class="btn btn-outline-primary"><i class="fa fa-plus">Create New Book</i></a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Author)</th>
+            <th>@Html.DisplayNameFor(model => model.Genre)</th>
+            <th>Options</th>
+            <th>Is Available</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@(item.IsAvailable ? "table-success" :"table-danger")">
+                <td>@item.Title</td>
+                <td>@item.Author</td>
+                <td>@item.Genre</td>
+                
+                <td>
+                    <a asp-action="Details" class="btn btn-success" asp-route-id="@item.Id">Details <i class="fa fa-edit"></i></a>
+
+                    <a asp-action="UpdateBook" class="btn btn-warning" asp-route-bookId="@item.Id">Edit <i class="fa fa-edit"></i></a>
+
+                    <a asp-action="DeleteBook" class="btn btn-danger" asp-route-bookId="@item.Id">Delete <i class="fa fa-trash"></i></a>
+                </td>
+
+                <td>
+                    @if (item.IsAvailable)
+                    {
+                        <span class="badge bg-success">Available</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Not Available</span>
+                    }
+                </td>
+
+
+
+            </tr>
+
+
+
+
+
+
+          @*   <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAvailable)
+                </td>
+
+
+                <td>
+                   
+                </td>
+
+            </tr> *@
+
+        }
+    </tbody>
+
+</table>
