@@ -84,19 +84,43 @@ namespace MVC_LibraryAPI.Controllers
             return View(model);
         }
 
+        //public async Task<IActionResult> DeleteBook(int bookId)
+        //{
+        //    var response = await _libraryService.GetBookById<ResponseDto>(bookId);
+        //    if(response != null && response.IsSuccess)
+        //    {
+        //        LibraryDTO model = JsonConvert.DeserializeObject<LibraryDTO>(Convert.ToString(response.Result));
+        //        return View(model);
+        //    }
+        //    return NotFound();
+        //}
         public async Task<IActionResult> DeleteBook(int bookId)
         {
             var response = await _libraryService.GetBookById<ResponseDto>(bookId);
-            if(response != null && response.IsSuccess)
+            if (response != null && response.IsSuccess)
             {
-                LibraryDTO model = JsonConvert.DeserializeObject<LibraryDTO>(Convert.ToString(response.Result));
+                LibraryDeleteDTO model = JsonConvert.DeserializeObject<LibraryDeleteDTO>(Convert.ToString(response.Result));
                 return View(model);
             }
             return NotFound();
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> DeleteBook(LibraryDTO model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var response = await _libraryService.DeleteBookAsync<ResponseDto>(model.Id);
+        //        if (response != null && response.IsSuccess)
+        //        {
+        //            return RedirectToAction(nameof(LibraryIndex));
+        //        }
+        //    }
+        //    return NotFound();
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> DeleteBook(LibraryDTO model)
+        public async Task<IActionResult> DeleteBook(LibraryDeleteDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -110,6 +134,6 @@ namespace MVC_LibraryAPI.Controllers
         }
 
 
-        
+
     }
 }
