@@ -15,6 +15,12 @@ namespace MVC_LibraryAPI
 
             StaticDetails.LibraryApiBase = builder.Configuration["ServiceUrls:LibraryAPI"];
 
+
+            builder.Services.AddCors((setup) => setup.AddPolicy("default", (options) =>
+            {
+                options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+            }));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
