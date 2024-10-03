@@ -8,6 +8,17 @@ namespace MVC_LibraryAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // CORS policy setup
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ILibraryService, LibraryService>();
@@ -16,12 +27,10 @@ namespace MVC_LibraryAPI
             StaticDetails.LibraryApiBase = builder.Configuration["ServiceUrls:LibraryAPI"];
 
 
-            builder.Services.AddCors((setup) => setup.AddPolicy("default", (options) =>
-            {
-                options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
-            }));
+            
 
             var app = builder.Build();
+            
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -35,6 +44,8 @@ namespace MVC_LibraryAPI
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("default");
+
 
             app.UseAuthorization();
 
